@@ -13,6 +13,7 @@
 #include "AutoConnectElementBasis.h"
 #include "AutoConnectJsonDefs.h"
 
+#define AUTOCONNECT_JSON_KEY_ACCEPT       "accept"
 #define AUTOCONNECT_JSON_KEY_ACTION       "action"
 #define AUTOCONNECT_JSON_KEY_APPLY        "apply"
 #define AUTOCONNECT_JSON_KEY_ARRANGE      "arrange"

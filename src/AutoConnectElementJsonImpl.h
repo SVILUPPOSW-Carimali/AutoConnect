@@ -221,8 +221,9 @@ void AutoConnectCheckboxJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject&
  * @return  An object size for JsonBuffer.
  */
 size_t AutoConnectFileJson::getObjectSize(void) const {
-  size_t  size = AutoConnectElementJson::getObjectSize() + JSON_OBJECT_SIZE(2);
+  size_t  size = AutoConnectElementJson::getObjectSize() + JSON_OBJECT_SIZE(3);
   size += sizeof(AUTOCONNECT_JSON_KEY_LABEL) + label.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_STORE) + sizeof(AUTOCONNECT_JSON_VALUE_EXTERNAL);
+  size += sizeof(AUTOCONNECT_JSON_KEY_ACCEPT) + accept.length() + sizeof('\0');
   return size; 
 }
 
@@ -251,6 +252,8 @@ bool AutoConnectFileJson::loadMember(const JsonObject& json) {
         return false;
       }
     }
+    if (json.containsKey(F(AUTOCONNECT_JSON_KEY_ACCEPT)))
+      accept = json[F(AUTOCONNECT_JSON_KEY_ACCEPT)].as<String>();
     return true;
   }
   return false;
@@ -279,6 +282,7 @@ void AutoConnectFileJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& jso
     break;
   }
   json[F(AUTOCONNECT_JSON_KEY_STORE)] = String(FPSTR(media));
+  json[F(AUTOCONNECT_JSON_KEY_ACCEPT)] = accept;
 }
 
 /**

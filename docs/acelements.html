@@ -742,6 +742,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#accept" class="md-nav__link">
+     accept
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1945,6 +1952,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#accept" class="md-nav__link">
+     accept
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2597,7 +2611,7 @@ Only <i class="far fa-square"></i> will be displayed if a label is not specified
 <small><strong><code>AutoConnectFile file("file", "", "Upload:", AC_File_FS)</code></strong></small></p>
 <p><small>On the page:</small><br><img src="images/acfile.png"></p>
 <h3 id="constructor_3"><i class="fa fa-edit"></i> Constructor<a class="headerlink" href="#constructor_3" title="Permanent link">&para;</a></h3>
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%;"><span></span><code><span style="color: #f8f8f2">AutoConnectFile(</span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> name, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> value, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> label, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> ACFile_t store, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> ACPosterior_t post)</span>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%;"><span></span><code><span style="color: #f8f8f2">AutoConnectFile(</span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> name, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> value, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> label, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> ACFile_t store, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> ACPosterior_t post, </span><span style="color: #66d9ef">const</span><span style="color: #f8f8f2"> </span><span style="color: #66d9ef">char</span><span style="color: #f92672">*</span><span style="color: #f8f8f2"> accept)</span>
 </code></pre></div>
 <h3 id="name_3"><i class="fa fa-caret-right"></i> name<a class="headerlink" href="#name_3" title="Permanent link">&para;</a></h3>
 <p>It is the <code>name</code> of the AutoConnectFile element and matches the name attribute of the input tag. It also becomes the parameter name of the query string when submitted.</p>
@@ -2618,6 +2632,8 @@ Only <i class="far fa-square"></i> will be displayed if a label is not specified
 </div>
 <h3 id="post_3"><i class="fa fa-caret-right"></i> post<a class="headerlink" href="#post_3" title="Permanent link">&para;</a></h3>
 <p>Specifies a tag to add behind the HTML code generated from the element. The default values is <code>AC_Tag_BR</code>.</p>
+<h3 id="accept"><i class="fa fa-caret-right"></i> accept<a class="headerlink" href="#accept" title="Permanent link">&para;</a></h3>
+<p>It is the <code>accept</code> attribute value of the input tag (a string that defines the file types the file input should accept as a comma-separated list of unique file type specifiers). The default value is <code>application/octet-stream</code>.</p>
 <h2 id="autoconnectinput">AutoConnectInput<a class="headerlink" href="#autoconnectinput" title="Permanent link">&para;</a></h2>
 <p>AutoConnectInput generates an HTML <code class="highlight"><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;text&quot;</span><span style="color: #f8f8f2">&gt;</span></code>, <code class="highlight"><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;number&quot;</span><span style="color: #f8f8f2">&gt;</span></code> or <code class="highlight"><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;password&quot;</span><span style="color: #f8f8f2">&gt;</span></code> tag and a <code class="highlight"><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">label</span><span style="color: #f8f8f2">&gt;</span></code> tag. It can also have a placeholder. The value of the input box is passed to the destination in the query string and can be retrieved programmatically. You can also update from the Sketches.</p>
 <p><i class="fa fa-eye"></i> <strong>Sample</strong><br>

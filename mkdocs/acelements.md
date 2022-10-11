@@ -228,7 +228,7 @@ AutoConnectFile generates an HTML `#!html <input type="file">` tag and a `#!html
 ### <i class="fa fa-edit"></i> Constructor
 
 ```cpp
-AutoConnectFile(const char* name, const char* value, const char* label, const ACFile_t store, const ACPosterior_t post)
+AutoConnectFile(const char* name, const char* value, const char* label, const ACFile_t store, const ACPosterior_t post, const char* accept)
 ```
 
 ### <i class="fa fa-caret-right"></i> name
@@ -257,6 +257,10 @@ Specifies the destination to save the uploaded file. The destination can be spec
 ### <i class="fa fa-caret-right"></i> post
 
 Specifies a tag to add behind the HTML code generated from the element. The default values is `AC_Tag_BR`.
+
+### <i class="fa fa-caret-right"></i> accept
+
+It is the `accept` attribute value of the input tag (a string that defines the file types the file input should accept as a comma-separated list of unique file type specifiers). The default value is `application/octet-stream`.
 
 ## AutoConnectInput
 

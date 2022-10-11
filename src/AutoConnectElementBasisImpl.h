@@ -160,7 +160,7 @@ const String AutoConnectFileBasis::toHTML(void) const {
     // Conversion of the AutoConnectFile element to HTML.
     // [<label for="name">label</label>]
     // <input type="file" id="name" name="name" accept="application/octet-stream">
-    static const char elmFileTempl[] PROGMEM = "%s<input type=\"file\" id=\"%s\" name=\"%s\" accept=\"application/octet-stream\">";
+    static const char elmFileTempl[] PROGMEM = "%s<input type=\"file\" id=\"%s\" name=\"%s\" accept=\"%s\">";
     static const char elmLabelTempl[] PROGMEM ="<%s for=\"%s\">%s</%s>";
     static const char elmNone[] PROGMEM = "";
     static const char tagLabel[] PROGMEM = "label";
@@ -177,10 +177,10 @@ const String AutoConnectFileBasis::toHTML(void) const {
       }
     }
 
-    elmLen = (elmLen + AutoConnectElementBasisImpl::_sizeof(elmFileTempl) + (name.length() * 2) - (AutoConnectElementBasisImpl::_sizeof("%s") * 3) + sizeof('\0') + 16) & (~0xf);
+    elmLen = (elmLen + AutoConnectElementBasisImpl::_sizeof(elmFileTempl) + (name.length() * 2) + accept.length() - (AutoConnectElementBasisImpl::_sizeof("%s") * 4) + sizeof('\0') + 16) & (~0xf);
     char*   elmFile = new char[elmLen];
     if (elmFile) {
-      snprintf_P(elmFile, elmLen, elmFileTempl, elmLabelPre, name.c_str(), name.c_str());
+      snprintf_P(elmFile, elmLen, elmFileTempl, elmLabelPre, name.c_str(), name.c_str(), accept.c_str());
       html = AutoConnectElementBasis::posterior(String(elmFile));
       delete elmFile;
     }

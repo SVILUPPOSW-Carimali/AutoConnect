@@ -157,8 +157,8 @@ class AutoConnectCheckboxBasis : AC_AUTOCONNECTELEMENT_ON_VIRTUAL public AutoCon
  */
 class AutoConnectFileBasis : AC_AUTOCONNECTELEMENT_ON_VIRTUAL public AutoConnectElementBasis {
  public:
-  explicit AutoConnectFileBasis(const char* name = "", const char* value = "", const char* label = "", const ACFile_t store = AC_File_FS, const ACPosterior_t post = AC_Tag_BR)
-    : AutoConnectElementBasis(name, value, post), label(String(label)), store(store), size(0) {
+  explicit AutoConnectFileBasis(const char* name = "", const char* value = "", const char* label = "", const ACFile_t store = AC_File_FS, const ACPosterior_t post = AC_Tag_BR, const char* accept = "application/octet-stream")
+    : AutoConnectElementBasis(name, value, post), label(String(label)), store(store), size(0), accept(accept) {
     _type = AC_File;
     _upload.reset();
   }
@@ -181,6 +181,7 @@ class AutoConnectFileBasis : AC_AUTOCONNECTELEMENT_ON_VIRTUAL public AutoConnect
   ACFile_t store;     /**< Type of file store */
   String   mimeType;  /**< Uploading file mime type string */
   size_t   size;      /**< Total uploaded bytes */
+  String   accept;     /**< A label for a subsequent input box */
 
  protected:
   std::unique_ptr<AutoConnectUploadHandler> _upload;
