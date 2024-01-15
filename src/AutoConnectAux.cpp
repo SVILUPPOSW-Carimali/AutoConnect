@@ -1178,9 +1178,10 @@ AutoConnectElement& AutoConnectAux::_loadElement(JsonObject& element, const Stri
  * @return Number of bytes output
  */
 size_t AutoConnectAux::saveElement(Stream& out, std::vector<String> const& names) {
-  size_t  bufferSize = 0;
   size_t  amount = names.size();
   size_t  size_n = 0;
+#if ARDUINOJSON_VERSION_MAJOR<=6
+  size_t  bufferSize = 0;
 
   // Calculate JSON buffer size
   if (amount == 0) {
@@ -1249,6 +1250,49 @@ size_t AutoConnectAux::saveElement(Stream& out, std::vector<String> const& names
       size_n = ARDUINOJSON_PRETTYPRINT(elements, out);
     }
   }
+#else
+  ArduinoJsonBuffer jb;
+  if (amount == 1) {
+    ArduinoJsonObject element = ARDUINOJSON_CREATEOBJECT(jb);
+    for (AutoConnectElement& elm : _addonElm)
+      if (elm.name.equalsIgnoreCase(names[0])) {
+        elm.serialize(element);
+        break;
+      }
+    size_n = ARDUINOJSON_PRINT(element, out);
+  }
+  else if (amount == 0) {
+    ArduinoJsonObject json = ARDUINOJSON_CREATEOBJECT(jb);
+    json[F(AUTOCONNECT_JSON_KEY_TITLE)] = _title;
+    json[F(AUTOCONNECT_JSON_KEY_URI)] = _uri;
+    if (_cors)
+      json[F(AUTOCONNECT_JSON_KEY_CORS)] = _cors;
+    if (_responsive)
+      json[F(AUTOCONNECT_JSON_KEY_RESPONSE)] = _responsive;
+    json[F(AUTOCONNECT_JSON_KEY_MENU)] = _menu;
+    if (_httpAuth == AC_AUTH_BASIC)
+      json[F(AUTOCONNECT_JSON_KEY_AUTH)] = String(F(AUTOCONNECT_JSON_VALUE_BASIC));
+    else if (_httpAuth == AC_AUTH_DIGEST)
+      json[F(AUTOCONNECT_JSON_KEY_AUTH)] = String(F(AUTOCONNECT_JSON_VALUE_DIGEST));
+    ArduinoJsonArray  elements = json[F(AUTOCONNECT_JSON_KEY_ELEMENT)].to<JsonArray>();
+    for (AutoConnectElement& elm : _addonElm) {
+      ArduinoJsonObject element = elements.add<JsonObject>();
+      elm.serialize(element);
+    }
+    size_n = ARDUINOJSON_PRETTYPRINT(json, out);
+  }
+  else if (amount >= 2) {
+    ArduinoJsonArray  elements = ARDUINOJSON_CREATEARRAY(jb);
+    for (String name : names)
+      for (AutoConnectElement& elm : _addonElm)
+        if (elm.name.equalsIgnoreCase(name)) {
+          ArduinoJsonObject element = elements.add<JsonObject>();
+          elm.serialize(element);
+          break;
+        }
+    size_n = ARDUINOJSON_PRETTYPRINT(elements, out);
+  }
+#endif
   return size_n;
 }
 

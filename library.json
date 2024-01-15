@@ -14,7 +14,7 @@
     },
     {
       "name": "ArduinoJson",
-      "version": "^6.19.4"
+      "version": "^7.0.0"
     }
   ],
   "frameworks": "arduino",

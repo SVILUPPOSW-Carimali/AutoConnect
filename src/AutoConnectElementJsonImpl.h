@@ -12,6 +12,7 @@
 
 #include "AutoConnectElementJson.h"
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -39,6 +40,7 @@ size_t AutoConnectElementJson::getObjectSize(void) const {
   size += postSize;
   return size;
 }
+#endif
 
 /**
  * Load an element member value from the JSON object.
@@ -121,6 +123,7 @@ void AutoConnectElementJson::_setMember(const JsonObject& json) {
   }
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -130,6 +133,7 @@ size_t AutoConnectButtonJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_ACTION) + action.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a button element attribute member from the JSON object.
@@ -159,6 +163,7 @@ void AutoConnectButtonJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& j
   json[F(AUTOCONNECT_JSON_KEY_ACTION)] = action;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -168,6 +173,7 @@ size_t AutoConnectCheckboxJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_LABEL) + label.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_CHECKED) + sizeof(AUTOCONNECT_JSON_KEY_LABELPOSITION) + sizeof(AUTOCONNECT_JSON_VALUE_INFRONT);
   return size;
 }
+#endif
 
 /**
  * Load a checkbox element attribute member from the JSON object.
@@ -216,6 +222,7 @@ void AutoConnectCheckboxJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject&
     json[F(AUTOCONNECT_JSON_KEY_LABELPOSITION)] = AUTOCONNECT_JSON_VALUE_BEHIND;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -226,6 +233,7 @@ size_t AutoConnectFileJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_ACCEPT) + accept.length() + sizeof('\0');
   return size; 
 }
+#endif
 
 /**
  * Load a file-select element attribute member from the JSON object.
@@ -285,6 +293,7 @@ void AutoConnectFileJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& jso
   json[F(AUTOCONNECT_JSON_KEY_ACCEPT)] = accept;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -294,6 +303,7 @@ size_t AutoConnectInputJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_LABEL) + label.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_PATTERN) + pattern.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_PLACEHOLDER) + placeholder.length() + sizeof(AUTOCONNECT_JSON_KEY_APPLY) + sizeof(AUTOCONNECT_JSON_VALUE_PASSWORD) + sizeof(AUTOCONNECT_JSON_KEY_STYLE) + style.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a input-box element attribute member from the JSON object.
@@ -359,6 +369,7 @@ void AutoConnectInputJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& js
   json[F(AUTOCONNECT_JSON_KEY_APPLY)] = String(FPSTR(applyType));
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -370,6 +381,7 @@ size_t AutoConnectRadioJson::getObjectSize(void) const {
     size += _value.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a radio-button element attribute member from the JSON object.
@@ -415,7 +427,11 @@ void AutoConnectRadioJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& js
   _serialize(json);
   json[F(AUTOCONNECT_JSON_KEY_TYPE)] = String(F(AUTOCONNECT_JSON_TYPE_ACRADIO));
   json[F(AUTOCONNECT_JSON_KEY_LABEL)] = label;
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   ArduinoJsonArray  values = json.createNestedArray(F(AUTOCONNECT_JSON_KEY_VALUE));
+  #else
+  ArduinoJsonArray  values = json[F(AUTOCONNECT_JSON_KEY_VALUE)].to<JsonArray>();
+  #endif
   for (const String& v : _values)
     values.add(v);
   PGM_P direction;
@@ -433,6 +449,7 @@ void AutoConnectRadioJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& js
     json[F(AUTOCONNECT_JSON_KEY_CHECKED)] = checked;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -442,6 +459,7 @@ size_t AutoConnectRangeJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_LABEL) + label.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_MIN) + sizeof(AUTOCONNECT_JSON_KEY_MAX) + sizeof(AUTOCONNECT_JSON_KEY_STEP) + sizeof(AUTOCONNECT_JSON_KEY_MAGNIFY) + sizeof(AUTOCONNECT_JSON_VALUE_INFRONT) + sizeof(AUTOCONNECT_JSON_KEY_STYLE) + style.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a input-range element attribute member from the JSON object.
@@ -512,6 +530,7 @@ void AutoConnectRangeJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& js
   json[F(AUTOCONNECT_JSON_KEY_STYLE)] = style;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -523,6 +542,7 @@ size_t AutoConnectSelectJson::getObjectSize(void) const {
     size += _option.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a select element attribute member from the JSON object.
@@ -556,7 +576,11 @@ bool AutoConnectSelectJson::loadMember(const JsonObject& json) {
 void AutoConnectSelectJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) {
   _serialize(json);
   json[F(AUTOCONNECT_JSON_KEY_TYPE)] = String(F(AUTOCONNECT_JSON_TYPE_ACSELECT));
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   ArduinoJsonArray options = json.createNestedArray(F(AUTOCONNECT_JSON_KEY_OPTION));
+  #else
+  ArduinoJsonArray options = json[F(AUTOCONNECT_JSON_KEY_OPTION)].to<JsonArray>();
+  #endif
   for (String o : _options)
     options.add(o);
   json[F(AUTOCONNECT_JSON_KEY_LABEL)] = label;
@@ -589,6 +613,7 @@ void AutoConnectStyleJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& js
   json[F(AUTOCONNECT_JSON_KEY_VALUE)] = value;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -598,6 +623,7 @@ size_t AutoConnectSubmitJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_URI) + uri.length() + 1;
   return size;
 }
+#endif
 
 /**
  * Load a submit element attribute member from the JSON object.
@@ -627,6 +653,7 @@ void AutoConnectSubmitJson::serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& j
   json[F(AUTOCONNECT_JSON_KEY_URI)] = uri;
 }
 
+#if ARDUINOJSON_VERSION_MAJOR<=6
 /**
  * Returns JSON object size.
  * @return  An object size for JsonBuffer.
@@ -636,6 +663,7 @@ size_t AutoConnectTextJson::getObjectSize(void) const {
   size += sizeof(AUTOCONNECT_JSON_KEY_STYLE) + style.length() + sizeof('\0') + sizeof(AUTOCONNECT_JSON_KEY_FORMAT) + format.length() + sizeof('\0');
   return size;
 }
+#endif
 
 /**
  * Load a text element attribute member from the JSON object.

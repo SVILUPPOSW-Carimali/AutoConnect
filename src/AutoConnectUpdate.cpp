@@ -404,12 +404,18 @@ String AutoConnectUpdateAct::_onCatalog(AutoConnectAux& catalog, PageArgument& a
         // The size of the JSON buffer is a fixed. It can be a problem
         // when parsing with ArduinoJson V6. If memory insufficient has
         // occurred during the parsing, increase this buffer size.
-        ArduinoJsonStaticBuffer<AUTOCONNECT_UPDATE_CATALOG_JSONBUFFER_SIZE> jb;
 
 #if ARDUINOJSON_VERSION_MAJOR<=5
+        ArduinoJsonStaticBuffer<AUTOCONNECT_UPDATE_CATALOG_JSONBUFFER_SIZE> jb;
         ArduinoJsonObject json = jb.parseObject(responseBody);
         parse = json.success();
+#elif ARDUINOJSON_VERSION_MAJOR<=6
+        ArduinoJsonStaticBuffer<AUTOCONNECT_UPDATE_CATALOG_JSONBUFFER_SIZE> jb;
+        DeserializationError err = deserializeJson(jb, responseBody);
+        ArduinoJsonObject json = jb.as<JsonObject>();
+        parse = (err == DeserializationError::Ok);
 #else
+        ArduinoJsonStaticBuffer jb;
         DeserializationError err = deserializeJson(jb, responseBody);
         ArduinoJsonObject json = jb.as<JsonObject>();
         parse = (err == DeserializationError::Ok);

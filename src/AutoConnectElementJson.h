@@ -86,7 +86,9 @@ class AutoConnectElementJson : virtual public AutoConnectElementBasis {
     AutoConnectElementBasis::post = post;
   }
   ~AutoConnectElementJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   virtual size_t  getObjectSize(void) const;
+  #endif
   virtual bool  loadMember(const JsonObject& json);
   virtual void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json);
   template<typename T>
@@ -120,7 +122,9 @@ class AutoConnectButtonJson :
     _defaultPost = AC_Tag_None;
   }
   ~AutoConnectButtonJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 
@@ -153,7 +157,9 @@ class AutoConnectCheckboxJson :
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectCheckboxJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 
@@ -182,7 +188,9 @@ class AutoConnectFileJson : public AutoConnectElementJson, public AutoConnectFil
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectFileJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 };
@@ -213,7 +221,9 @@ class AutoConnectInputJson :
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectInputJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 
@@ -245,7 +255,9 @@ class AutoConnectRadioJson :
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectRadioJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 
@@ -281,7 +293,9 @@ class AutoConnectRangeJson : public AutoConnectElementJson, public AutoConnectRa
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectRangeJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 };
@@ -308,7 +322,9 @@ class AutoConnectSelectJson :
     _defaultPost = AC_Tag_BR;
   }
   ~AutoConnectSelectJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 
@@ -358,7 +374,9 @@ class AutoConnectSubmitJson : public AutoConnectElementJson, public AutoConnectS
     _defaultPost = AC_Tag_None;
   }
   ~AutoConnectSubmitJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 };
@@ -383,7 +401,9 @@ class AutoConnectTextJson : public AutoConnectElementJson, public AutoConnectTex
     _defaultPost = AC_Tag_None;
   }
   ~AutoConnectTextJson() {}
+  #if ARDUINOJSON_VERSION_MAJOR<=6
   size_t  getObjectSize(void) const override;
+  #endif
   bool  loadMember(const JsonObject& json) override;
   void  serialize(ARDUINOJSON_OBJECT_REFMODIFY JsonObject& json) override;
 };

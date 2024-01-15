@@ -162,7 +162,11 @@ class AutoConnectAux : public PageBuilder {
   template<typename T>
   bool _parseJson(T in, const size_t size) {
     AC_UNUSED(size);
+    #if ARDUINOJSON_VERSION_MAJOR<=6
     ArduinoJsonBuffer jsonBuffer(AUTOCONNECT_JSONBUFFER_PRIMITIVE_SIZE);
+    #else
+    ArduinoJsonBuffer jsonBuffer;
+    #endif
   #if ARDUINOJSON_VERSION_MAJOR<=5
     JsonObject& jb = jsonBuffer.parseObject(in);
     if (!jb.success()) {
@@ -190,7 +194,11 @@ class AutoConnectAux : public PageBuilder {
   template<typename T, typename U,
   typename std::enable_if<std::is_same<U, const String&>::value || std::is_same<U, std::vector<String> const&>::value>::type* = nullptr>
   bool _parseElement(T in, U name, const size_t size) {
+    #if ARDUINOJSON_VERSION_MAJOR<=6
     ArduinoJsonBuffer jsonBuffer(size);
+    #else
+    ArduinoJsonBuffer jsonBuffer;
+    #endif
     JsonVariant jb;
   #if ARDUINOJSON_VERSION_MAJOR<=5
     jb = jsonBuffer.parse(in);

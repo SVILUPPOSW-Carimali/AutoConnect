@@ -34,7 +34,11 @@ using ArduinoJsonArray = JsonArray&;
 using ArduinoJsonBuffer = DynamicJsonBuffer;
 #define AUTOCONNECT_JSONBUFFER_PRIMITIVE_SIZE AUTOCONNECT_JSONBUFFER_SIZE
 #else
+#if ARDUINOJSON_VERSION_MAJOR<=6
 #define ArduinoJsonStaticBuffer           StaticJsonDocument
+#else
+#define ArduinoJsonStaticBuffer           JsonDocument
+#endif
 #define ARDUINOJSON_CREATEOBJECT(doc)     doc.to<JsonObject>()
 #define ARDUINOJSON_CREATEARRAY(doc)      doc.to<JsonArray>()
 #define ARDUINOJSON_PRETTYPRINT(doc, out) ({ size_t s = serializeJsonPretty(doc, out); s; })
@@ -63,7 +67,11 @@ struct SpiRamAllocatorST {
 using ArduinoJsonBuffer = BasicJsonDocument<SpiRamAllocatorST>;
 #else
 #define AUTOCONNECT_JSONBUFFER_PRIMITIVE_SIZE AUTOCONNECT_JSONDOCUMENT_SIZE
+#if ARDUINOJSON_VERSION_MAJOR<=6
 using ArduinoJsonBuffer = DynamicJsonDocument;
+#else
+using ArduinoJsonBuffer = JsonDocument;
+#endif
 #endif
 #endif
 
